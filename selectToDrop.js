@@ -46,7 +46,9 @@ submitButtons.forEach((button, index) =>
 //main renderer
 export function renderer() {
   for (let i = 0; i < allSelects.length; i++) {
+    //clean rendered part
     selectedLabelsSet[i].length = 0;
+    selectionPanelSet[i].innerHTML = "";
 
     optionsSet[i].forEach((option) => {
       const checkStatus = option.isSelected ? "checked" : "";
@@ -55,18 +57,16 @@ export function renderer() {
       dropOption.innerHTML = `
       <label class="option">
         <input id=${option.name} type="checkbox" ${checkStatus} value=true />
-        ${option.name}
+        <span>${option.name}</span>
       </label>
     `;
 
       const checkbox = dropOption.children[0].children[0];
       checkbox.addEventListener("click", () => {
         option.isSelected = !option.isSelected;
-        selectionPanelSet.forEach(
-          (selectionPanel) => (selectionPanel.innerHTML = "")
-        );
         renderer();
       });
+
       selectionPanelSet[i].appendChild(dropOption);
     });
 
